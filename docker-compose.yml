@@ -6,6 +6,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
@@ -42,6 +43,8 @@ services:
       - "3000"
     volumes:
       - ./api:/api
+    networks:
+      - postgres
 
 networks:
   postgres:
