@@ -66,6 +66,13 @@ services:
       - "1080:1080"
       - "1025:1025"
 
+  lavinmq:
+    container_name: lavinmq_container
+    image: cloudamqp/lavinmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
 networks:
   postgres:
     driver: bridge
