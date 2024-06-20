@@ -5,7 +5,7 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y openssl zip unzip git
 RUN apt-get install -y zlib1g-dev libwebp-dev libpng-dev && docker-php-ext-install gd
 RUN apt-get install libzip-dev -y && docker-php-ext-install zip
-RUN apt-get install -y libpq-dev postgresql-dev
+RUN apt-get install -y libpq-dev
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
