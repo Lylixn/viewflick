@@ -2,8 +2,9 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import tailwind from "@astrojs/tailwind";
 import preact from "@astrojs/preact";
-
 import react from "@astrojs/react";
+
+import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,15 +22,11 @@ export default defineConfig({
       config: "./tailwind.config.js"
     }
   }],
-  integrations: [
-    tailwind({
-      configFile: './tailwind.config.mjs'
-    }),
-    preact({
-      include: ['**/preact/*'],
-    }),
-    react({
-      include: ['**/react/*'],
-    })
-  ]
+  integrations: [tailwind({
+    configFile: './tailwind.config.mjs'
+  }), preact({
+    include: ['**/preact/*']
+  }), react({
+    include: ['**/react/*']
+  }), mdx()]
 });
