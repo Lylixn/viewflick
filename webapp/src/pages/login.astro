@@ -1,11 +1,11 @@
 ---
 
-import AuthLayout from "../layouts/AuthLayout.astro";---
+import AuthLayout from "../layouts/AuthLayout.astro";
+import LoginForm from "../components/form/LoginForm.astro";---
 
 <AuthLayout title="Login">
-  <slot name="title">Login</slot>
-  <slot name="form">
-    <input type="email" name="email" placeholder="Email" />
-    <input type="password" name="password" placeholder="Password" />
-  </slot>
+  <span slot="title">Login</span>
+  <div slot="form">
+    <LoginForm />
+  </div>
 </AuthLayout>
