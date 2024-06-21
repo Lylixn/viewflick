@@ -3,14 +3,16 @@ import type {APIContext, MiddlewareNext} from "astro";
 
 
 export const cookieChecking = defineMiddleware( (context: APIContext, next: MiddlewareNext) => {
+  const whitelist = ['/login', '/register', '/forgot-password', '/reset-password']
   let cookies = context.cookies
 
-  if (cookies.get('token')) {
-    console.log('token found')
+  console.log(context.url.pathname)
+  if (cookies.get('token') || whitelist.includes(context.url.pathname)) {
     return next();
   }
 
-  return Response.redirect(new URL('/login', context.request.url).toString(), 301);
+  context.redirect('/login');
+  return next();
 });
 
 

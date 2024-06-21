@@ -1,6 +1,9 @@
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import tailwind from "@astrojs/tailwind";
+import preact from "@astrojs/preact";
+
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,7 +13,7 @@ export default defineConfig({
     port: 3000
   },
   adapter: node({
-    mode: 'standalone',
+    mode: 'middleware'
   }),
   plugins: [{
     name: "astro-plugin-tailwindcss",
@@ -18,5 +21,15 @@ export default defineConfig({
       config: "./tailwind.config.js"
     }
   }],
-  integrations: [tailwind()],
+  integrations: [
+    tailwind({
+      configFile: './tailwind.config.mjs'
+    }),
+    preact({
+      include: ['**/preact/*'],
+    }),
+    react({
+      include: ['**/react/*'],
+    })
+  ]
 });

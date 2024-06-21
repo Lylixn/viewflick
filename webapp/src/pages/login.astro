@@ -1,5 +1,11 @@
 ---
 
----
+import AuthLayout from "../layouts/AuthLayout.astro";---
 
-<p>login</p>
+<AuthLayout title="Login">
+  <slot name="title">Login</slot>
+  <slot name="form">
+    <input type="email" name="email" placeholder="Email" />
+    <input type="password" name="password" placeholder="Password" />
+  </slot>
+</AuthLayout>
