@@ -10,9 +10,7 @@ export const cookieChecking = defineMiddleware( (context: APIContext, next: Midd
     return next();
   }
 
-  console.log('redirecting to login')
-  context.redirect('/login', 302)
-  return next();
+  return Response.redirect(new URL('/login', context.request.url).toString(), 301);
 });
 
 
