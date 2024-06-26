@@ -1,25 +1,30 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
-# Install dependencies
+WORKDIR /api
+COPY . .
+
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y openssl zip unzip git
+RUN apt-get install -y openssl zip unzip git wget
 RUN apt-get install -y zlib1g-dev libwebp-dev libpng-dev && docker-php-ext-install gd
 RUN apt-get install libzip-dev -y && docker-php-ext-install zip
 RUN apt-get install -y libpq-dev
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN docker-php-ext-install zip pdo pdo_mysql
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pgsql pdo_pgsql
 
-# Set working directory
-WORKDIR /api
-COPY . .
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install dependencies
-RUN composer install
+RUN composer global require leafs/cli
+ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
-CMD php artisan serve --host=0.0.0.0 --port=8000
+RUN composer install \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --no-dev \
+    --prefer-dist \
+    --optimize-autoloader
+
+CMD ["php", "leaf", "serve", "--port=3000"]
